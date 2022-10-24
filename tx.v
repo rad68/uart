@@ -107,7 +107,7 @@ else                    baud_cnt <= 0;
 
 assign done =   (enable[0] == 1 & byte_cnt == 0) | 
                 (enable[1] == 1 & byte_cnt == 1) |
-                (enable[2] == 1 & byte_cnt == 2) | 
+                (enable[2] == 1 & byte_cnt == 3) | 
                 (enable[3] == 1 & byte_cnt == 7) | 
                 (enable[4] == 1 & byte_cnt == 15) | 
                 (enable[5] == 1 & byte_cnt == 31);
