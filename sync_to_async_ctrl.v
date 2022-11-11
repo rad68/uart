@@ -58,12 +58,6 @@ if (SYNC_STAGE == 0)
 else
     assign async_ack_posedge = ~async_ack_dd & async_ack_d[SYNC_STAGE-1];
 
-wire async_ack_negedge;
-if (SYNC_STAGE == 0)
-    assign async_ack_negedge = async_ack_dd & ~async_ack;
-else
-    assign async_ack_negedge = async_ack_dd & ~async_ack_d[SYNC_STAGE-1];
-
 always @(posedge clock)
 if (reset)                          async_req <= 0;
 else if (sync_valid & sync_ready)   async_req <= 0;
@@ -76,8 +70,8 @@ else        async_d <= sync_d;
 
 always @(posedge clock)
 if (reset)                                  sync_ready <= 0;
-else if (async_ack_posedge & sync_valid)    sync_ready <= 1;
 else if (sync_valid & sync_ready)           sync_ready <= 0;
+else if (async_ack_posedge & sync_valid)    sync_ready <= 1;
 else                                        sync_ready <= sync_ready;
 
 endmodule

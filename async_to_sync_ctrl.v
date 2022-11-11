@@ -65,15 +65,9 @@ if (SYNC_STAGE == 0)
 else
     assign async_req_posedge = ~async_req_dd & async_req_d[SYNC_STAGE-1];
 
-wire async_req_negedge;
-if (SYNC_STAGE == 0)
-    assign async_req_negedge = async_req_dd & ~async_req;
-else
-    assign async_req_negedge = async_req_dd & ~async_req_d[SYNC_STAGE-1];
-
 always @(posedge clock)
 if (reset)                          async_ack <= 0;
-else if (async_req_negedge)         async_ack <= 0;
+else if (!async_req_dd)             async_ack <= 0;
 else if (sync_valid & sync_ready)   async_ack <= 1;
 else                                async_ack <= async_ack;
 
