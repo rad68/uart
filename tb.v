@@ -106,7 +106,7 @@ initial begin
     test_run_1 = 0;
     reset_task;
     delay(10);
-    set_config(8'h62);
+    set_config(8'h68);
     delay(10);
     test_run_1 = 1; delay(1); test_run_0 = 1;
     //send_rx_char(8,0);

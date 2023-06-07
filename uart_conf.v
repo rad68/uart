@@ -40,7 +40,7 @@ else if (conf_req)              conf_ack <= 1;
 else                            conf_ack <= conf_ack;
 
 always @(posedge clock)
-if (reset)                      conf_out <= 8'h62;
+if (reset)                      conf_out <= 8'h60;
 else if (conf_req & conf_ack)   conf_out <= conf_in;
 else                            conf_out <= conf_out;
 

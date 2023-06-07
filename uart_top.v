@@ -5,7 +5,8 @@
     [0] PARITY: 0 - even, 1 - odd
     [1] STOP BIT: 0 - one stop-bit, 1 - 2 stop-bits
     [2] MSB: 0 - msb first, 1 - msb last (not supported)
-    [4:3] - Reserved
+    [3] Turn on/off
+    [4] Reserved
     [7:5] BAUD: 0 - 1200, 1 - 2400, 2 - 4800, 3 - 9600, 4 - 19200, 5 - 38400, 6 - 57600, 7 - 115200
 
     Note:
