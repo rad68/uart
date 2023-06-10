@@ -1,19 +1,19 @@
 `timescale 1ns/1ps
 
 module uart_tx #(
-     parameter FREQ = 50000000
-    ,parameter CONFIG_WIDTH = 8
-    ,parameter UART_DATA_WIDTH = 8
+   parameter FREQ = 50000000
+  ,parameter CONFIG_WIDTH = 8
+  ,parameter UART_DATA_WIDTH = 8
 )(
-    //system
-     input                          clock
-    ,input                          reset
-    ,input      [7:0]               din
-    ,input                          din_valid
-    ,output reg                     din_ready
-    ,output                         tx
-    //config
-    ,input      [CONFIG_WIDTH-1:0]  conf
+  //system
+   input                          clock
+  ,input                          reset
+  ,input      [7:0]               din
+  ,input                          din_valid
+  ,output reg                     din_ready
+  ,output                         tx
+  //config
+  ,input      [CONFIG_WIDTH-1:0]  conf
 );
 
 reg [CONFIG_WIDTH -1:0] tx_conf;
@@ -25,14 +25,14 @@ wire [31:0] baud_cnt_limit;
 reg [31:0] baud_cnt_limit_array[0:7];
 always @ (posedge clock)
 if (reset) begin
-    baud_cnt_limit_array[0] <= FREQ/1200 -1;
-    baud_cnt_limit_array[1] <= FREQ/2400 -1;
-    baud_cnt_limit_array[2] <= FREQ/4800 -1;
-    baud_cnt_limit_array[3] <= FREQ/9600 -1;
-    baud_cnt_limit_array[4] <= FREQ/19200 -1;
-    baud_cnt_limit_array[5] <= FREQ/38400 -1;
-    baud_cnt_limit_array[6] <= FREQ/57600 -1;
-    baud_cnt_limit_array[7] <= FREQ/115200 -1;
+  baud_cnt_limit_array[0] <= FREQ/1200 -1;
+  baud_cnt_limit_array[1] <= FREQ/2400 -1;
+  baud_cnt_limit_array[2] <= FREQ/4800 -1;
+  baud_cnt_limit_array[3] <= FREQ/9600 -1;
+  baud_cnt_limit_array[4] <= FREQ/19200 -1;
+  baud_cnt_limit_array[5] <= FREQ/38400 -1;
+  baud_cnt_limit_array[6] <= FREQ/57600 -1;
+  baud_cnt_limit_array[7] <= FREQ/115200 -1;
 end
 
 assign baud_cnt_limit = tx_conf[7:5] == 0 ? baud_cnt_limit_array[0] :

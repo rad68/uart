@@ -1,19 +1,19 @@
 `timescale 1ns/1ps
 
 module uart_rx #(
-     parameter FREQ = 50000000
-    ,parameter CONFIG_WIDTH = 8
-    ,parameter UART_DATA_WIDTH = 8
+   parameter FREQ = 50000000
+  ,parameter CONFIG_WIDTH = 8
+  ,parameter UART_DATA_WIDTH = 8
 )(
-    //uart interface
-     input                              clock
-    ,input                              reset
-    ,input                              rx
-    ,output reg                         dout_valid
-    ,input                              dout_ready
-    ,output     [UART_DATA_WIDTH  :0]   dout
-    //conf
-    ,input      [CONFIG_WIDTH   -1:0]   conf 
+  //uart interface
+   input                            clock
+  ,input                            reset
+  ,input                            rx
+  ,output reg                       dout_valid
+  ,input                            dout_ready
+  ,output     [UART_DATA_WIDTH  :0] dout
+  //conf
+  ,input      [CONFIG_WIDTH   -1:0] conf 
 );
 
 reg [CONFIG_WIDTH-1:0] rx_conf;
@@ -25,14 +25,14 @@ wire [31:0] baud_cnt_limit;
 reg [31:0] baud_cnt_limit_array[0:7];
 always @ (posedge clock)
 if (reset) begin
-    baud_cnt_limit_array[0] <= FREQ/1200 -1;
-    baud_cnt_limit_array[1] <= FREQ/2400 -1;
-    baud_cnt_limit_array[2] <= FREQ/4800 -1;
-    baud_cnt_limit_array[3] <= FREQ/9600 -1;
-    baud_cnt_limit_array[4] <= FREQ/19200 -1;
-    baud_cnt_limit_array[5] <= FREQ/38400 -1;
-    baud_cnt_limit_array[6] <= FREQ/57600 -1;
-    baud_cnt_limit_array[7] <= FREQ/115200 -1;
+  baud_cnt_limit_array[0] <= FREQ/1200 -1;
+  baud_cnt_limit_array[1] <= FREQ/2400 -1;
+  baud_cnt_limit_array[2] <= FREQ/4800 -1;
+  baud_cnt_limit_array[3] <= FREQ/9600 -1;
+  baud_cnt_limit_array[4] <= FREQ/19200 -1;
+  baud_cnt_limit_array[5] <= FREQ/38400 -1;
+  baud_cnt_limit_array[6] <= FREQ/57600 -1;
+  baud_cnt_limit_array[7] <= FREQ/115200 -1;
 end
 
 assign baud_cnt_limit = rx_conf[7:5] == 0 ? baud_cnt_limit_array[0] :
@@ -43,8 +43,8 @@ assign baud_cnt_limit = rx_conf[7:5] == 0 ? baud_cnt_limit_array[0] :
                         rx_conf[7:5] == 5 ? baud_cnt_limit_array[5] :
                         rx_conf[7:5] == 6 ? baud_cnt_limit_array[6] : baud_cnt_limit_array[7];
 
-localparam  IDLE    = 1'b0,
-            DATA    = 1'b1;
+localparam  IDLE = 1'b0,
+            DATA = 1'b1;
 
 reg state;
 wire next_state;
